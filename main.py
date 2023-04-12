@@ -11,7 +11,6 @@ PAGE_URL = "https://www.bing.com/create"
 driver.get(PAGE_URL)
 
 time.sleep(5)
-input("Press enter to continue...")
 
 # ? Cookie prompt
 driver.find_element(
