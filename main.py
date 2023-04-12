@@ -1,15 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options
 
 import time
 import os
 
-options = Options()
-options.use_chromium = True
-options.add_argument("--headless")
-options.add_argument("--disable-gpu")
-driver = webdriver.Edge(executable_path="/msedgedriver.exe", options=options)
+driver = webdriver.Edge(executable_path="/msedgedriver.exe")
 
 PAGE_URL = "https://www.bing.com/create"
 
