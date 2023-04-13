@@ -47,6 +47,15 @@ class DesktopManager:
 
         target_desktop.go()
 
+    def create_desktop(self) -> VirtualDesktop:
+        """Create a new desktop.
+
+        Returns:
+            VirtualDesktop: New desktop.
+        """
+
+        return VirtualDesktop.current().create()
+
     def remove_desktop(self, target_desktop: VirtualDesktop):
         """Remove a target desktop.
 
