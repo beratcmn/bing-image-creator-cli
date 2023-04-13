@@ -1,4 +1,4 @@
-from pyvda import AppView, VirtualDesktop, get_apps_by_z_order, get_virtual_desktops
+from pyvda import AppView
 
 from DesktopManager import DesktopManager
 from WebScapper import Scrapper
