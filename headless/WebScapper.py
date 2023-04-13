@@ -133,37 +133,39 @@ class Scrapper:
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a
 
-        print("Getting image 1...")
-        image_1 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
-        ).get_attribute("href")
-        time.sleep(0.5)
+        #? This has to be a try block because Bing doesn't always produce 4 images.
+        try:
+            print("Getting image 1...")
+            image_1 = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+            ).get_attribute("href")
+            time.sleep(0.5)
 
-        print("Getting image 2...")
-        image_2 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a",
-        ).get_attribute("href")
-        time.sleep(0.5)
+            print("Getting image 2...")
+            image_2 = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a",
+            ).get_attribute("href")
+            time.sleep(0.5)
 
-        print("Getting image 3...")
-        image_3 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a",
-        ).get_attribute("href")
-        time.sleep(0.5)
+            print("Getting image 3...")
+            image_3 = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a",
+            ).get_attribute("href")
+            time.sleep(0.5)
 
-        print("Getting image 4...")
-        image_4 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a",
-        ).get_attribute("href")
-        time.sleep(0.5)
-
-        print("Saving URLs...")
-        with open("image_urls.txt", "w") as f:
-            f.write(image_1 + "\n" + image_2 + "\n" + image_3 + "\n" + image_4)
+            print("Getting image 4...")
+            image_4 = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a",
+            ).get_attribute("href")
+            time.sleep(0.5)
+        finally:
+            print("Saving URLs...")
+            with open("image_urls.txt", "w") as f:
+                f.write(image_1 + "\n" + image_2 + "\n" + image_3 + "\n" + image_4)
 
     def generate_image(self):
         self.driver.get(self.PAGE_URL)
