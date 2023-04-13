@@ -7,6 +7,8 @@ from dataclasses import dataclass
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import requests
 
@@ -199,8 +201,19 @@ class Scrapper:
         prompt_input_element.send_keys(prompt)
         prompt_input_element.submit()
 
-        print("Generating image...")
-        time.sleep(15)
+        print("Generating images...")
+
+        try:
+            first_image = WebDriverWait(self.driver, 45).until(
+                EC.presence_of_element_located(
+                    (
+                        By.XPATH,
+                        "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+                    )
+                )
+            )
+        finally:
+            print("Images generated.")
 
     def start(self):
         # self.open_browser()
