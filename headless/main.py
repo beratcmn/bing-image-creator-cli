@@ -17,6 +17,8 @@ def main():
 
     scrapper.start()
 
+    new_desktop.remove()
+
 
 if __name__ == "__main__":
     main()
