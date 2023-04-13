@@ -44,10 +44,11 @@ class Scrapper:
         else:
             raise Exception("Invalid browser!")
 
-    def open_browser(self):
+    def open_browser(self, move_callback):
         self.driver.get(self.PAGE_URL)
 
         self.browserWindowHWND = AppView.current().hwnd
+        move_callback()
 
         self.driver.maximize_window()
 
@@ -133,7 +134,8 @@ class Scrapper:
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a
 
-        #? This has to be a try block because Bing doesn't always produce 4 images.
+        # ? This has to be a try block because Bing doesn't always produce 4 images.
+        image_1, image_2, image_3, image_4 = "", "", "", ""
         try:
             print("Getting image 1...")
             image_1 = self.driver.find_element(
@@ -162,6 +164,8 @@ class Scrapper:
                 "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a",
             ).get_attribute("href")
             time.sleep(0.5)
+        except:
+            print("An error occurred while getting image URLs.")
         finally:
             print("Saving URLs...")
             with open("image_urls.txt", "w") as f:
