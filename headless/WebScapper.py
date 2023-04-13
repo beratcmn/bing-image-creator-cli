@@ -131,8 +131,8 @@ class Scrapper:
         # ? Image xPaths
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a
+        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[1]/div/div/a
+        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[2]/div/div/a
 
         # ? This has to be a try block because Bing doesn't always produce 4 images.
         image_1, image_2, image_3, image_4 = "", "", "", ""
@@ -154,14 +154,14 @@ class Scrapper:
             print("Getting image 3...")
             image_3 = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a",
+                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[1]/div/div/a",
             ).get_attribute("href")
             time.sleep(0.5)
 
             print("Getting image 4...")
             image_4 = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a",
+                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[2]/div/div/a",
             ).get_attribute("href")
             time.sleep(0.5)
         except:
