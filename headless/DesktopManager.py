@@ -28,11 +28,30 @@ class DesktopManager:
         return VirtualDesktop(1).create()
 
     def move_window(self, target_window: AppView, target_desktop: VirtualDesktop):
+        """Moves a window to a target desktop.
+
+        Args:
+            target_window (AppView): Target window to move.
+            target_desktop (VirtualDesktop): Target desktop to move the window to.
+        """
+
         target_window.move(target_desktop)
         print(f"Moved window {target_window.hwnd} to {target_desktop.number}")
 
     def go_to_desktop(self, target_desktop: VirtualDesktop):
+        """Go to a target desktop.
+
+        Args:
+            target_desktop (VirtualDesktop): Target desktop to go to.
+        """
+
         target_desktop.go()
 
     def remove_desktop(self, target_desktop: VirtualDesktop):
+        """Remove a target desktop.
+
+        Args:
+            target_desktop (VirtualDesktop): Target desktop to remove.
+        """
+
         target_desktop.remove()
