@@ -12,6 +12,12 @@ Other things to include:
 
 ---
 
+## Screenshot
+
+![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/banner-0.png)
+
+---
+
 ## Installation
 
 To install all of the template files, run the following script from the root of your project's directory:
@@ -20,7 +26,6 @@ To install all of the template files, run the following script from the root of 
 git clone https://github.com/beratcmn/bing-image-creator-cli.git
 cd bing-image-creator-cli
 pip install requirements.txt
-python src/main.py
 ```
 
 ---
