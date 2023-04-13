@@ -34,6 +34,7 @@ class Scrapper:
     PAGE_URL = "https://www.bing.com/create"
     edgeAutoLogin: bool = True
 
+    imagePropmpt = ""
     browserWindowHWND = 0
 
     def __post_init__(self):
@@ -178,7 +179,9 @@ class Scrapper:
             print("Saving URLs...")
             with open("image_urls.txt", "w") as f:
                 f.write(
-                    images_total
+                    self.imagePropmpt
+                    + "\n"
+                    + images_total
                     + "\n"
                     + image_1
                     + "\n"
@@ -196,9 +199,9 @@ class Scrapper:
 
         os.system("cls")
 
-        prompt = input("Enter prompt: ")
+        self.imagePropmpt = input("Enter prompt: ")
 
-        prompt_input_element.send_keys(prompt)
+        prompt_input_element.send_keys(self.imagePropmpt)
         prompt_input_element.submit()
 
         print("Generating images...")
