@@ -176,8 +176,15 @@ class Scrapper:
             print("Saving URLs...")
             with open("image_urls.txt", "w") as f:
                 f.write(
-                    images_total + "\n",
-                    image_1 + "\n" + image_2 + "\n" + image_3 + "\n" + image_4,
+                    images_total
+                    + "\n"
+                    + image_1
+                    + "\n"
+                    + image_2
+                    + "\n"
+                    + image_3
+                    + "\n"
+                    + image_4,
                 )
 
     def generate_image(self):
