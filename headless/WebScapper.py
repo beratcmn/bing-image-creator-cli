@@ -135,7 +135,13 @@ class Scrapper:
         # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[2]/div/div/a
 
         # ? This has to be a try block because Bing doesn't always produce 4 images.
-        image_1, image_2, image_3, image_4 = "", "", "", ""
+        images_total, image_1, image_2, image_3, image_4 = (
+            self.driver.current_url,
+            "",
+            "",
+            "",
+            "",
+        )
         try:
             print("Getting image 1...")
             image_1 = self.driver.find_element(
@@ -169,7 +175,10 @@ class Scrapper:
         finally:
             print("Saving URLs...")
             with open("image_urls.txt", "w") as f:
-                f.write(image_1 + "\n" + image_2 + "\n" + image_3 + "\n" + image_4)
+                f.write(
+                    images_total + "\n",
+                    image_1 + "\n" + image_2 + "\n" + image_3 + "\n" + image_4,
+                )
 
     def generate_image(self):
         self.driver.get(self.PAGE_URL)
