@@ -10,10 +10,11 @@ def main():
 
     new_desktop = desktopManager.create_desktop()
 
-    scrapper.open_browser()
-
-    browser_window = AppView(scrapper.browserWindowHWND)
-    desktopManager.move_window(browser_window, new_desktop)
+    scrapper.open_browser(
+        move_callback=lambda: desktopManager.move_window(
+            AppView(scrapper.browserWindowHWND), new_desktop
+        )
+    )
 
     scrapper.start()
 
