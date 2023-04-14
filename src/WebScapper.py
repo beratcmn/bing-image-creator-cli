@@ -68,16 +68,14 @@ class Scrapper:
             self.get_prompt_input_element()
             print("Auto login successful!")
 
-        # TODO Uncomment this line to pause the program after the browser is opened.
-        # input("Press enter to continue...")
-
     def get_prompt_input_element(self):
         while True:
             try:
-                print("Prompt element found!")
-                return self.driver.find_element(
+                element = self.driver.find_element(
                     By.XPATH, "/html/body/div[2]/div[2]/div[2]/form/div/input[1]"
                 )
+                print("Prompt element found!")
+                return element
             except:
                 print("Prompt element not found, refreshing...")
                 self.driver.get(self.PAGE_URL)
