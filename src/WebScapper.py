@@ -83,52 +83,33 @@ class Scrapper:
                 self.driver.get(self.PAGE_URL)
                 time.sleep(5)
 
-    # TODO Create a function to save images to local disk.
-    def save_image(self, url: str):
-        image_name = url.split("/")[-1]
-        with open("image.png", "wb") as f:
-            f.write(requests.get(url).content)
+    def generate_image(self):
+        self.driver.get(self.PAGE_URL)
+        time.sleep(5)
+        prompt_input_element = self.get_prompt_input_element()
 
-    def save_images(self):
-        print("Saving images...")
+        os.system("cls")
 
-        # ? Image xPaths
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a/div/img
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a/div/img
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a/div/img
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a/div/img
+        self.imagePrompt = input("Enter prompt: ")
 
-        print("Getting image 1...")
-        image_1 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a/div/img",
-        ).get_attribute("src")
+        prompt_input_element.send_keys(self.imagePrompt)
+        prompt_input_element.submit()
 
-        print("Getting image 2...")
-        image_2 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a/div/img",
-        ).get_attribute("src")
+        print("Generating images...")
 
-        print("Getting image 3...")
-        image_3 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[3]/div/div/a/div/img",
-        ).get_attribute("src")
+        try:
+            first_image = WebDriverWait(self.driver, 45).until(
+                EC.presence_of_element_located(
+                    (
+                        By.XPATH,
+                        "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+                    )
+                )
+            )
+        finally:
+            print("Images generated.")
 
-        print("Getting image 4...")
-        image_4 = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[4]/div/div/a/div/img",
-        ).get_attribute("src")
-
-        print("Saving images...")
-        self.save_image(image_1)
-        self.save_image(image_2)
-        self.save_image(image_3)
-        self.save_image(image_4)
-
-    def save_image_urls(self):
+    def save_image_urls(self) -> list[str]:
         print("Saving image URLs...")
 
         # ? Image xPaths
@@ -194,38 +175,20 @@ class Scrapper:
                     + image_4,
                 )
 
-    def generate_image(self):
-        self.driver.get(self.PAGE_URL)
-        time.sleep(5)
-        prompt_input_element = self.get_prompt_input_element()
+            return [images_total, image_1, image_2, image_3, image_4]
 
-        os.system("cls")
+    def save_images(self):
+        print("Saving images...")
 
-        self.imagePrompt = input("Enter prompt: ")
-
-        prompt_input_element.send_keys(self.imagePrompt)
-        prompt_input_element.submit()
-
-        print("Generating images...")
-
-        try:
-            first_image = WebDriverWait(self.driver, 45).until(
-                EC.presence_of_element_located(
-                    (
-                        By.XPATH,
-                        "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
-                    )
-                )
-            )
-        finally:
-            print("Images generated.")
+    def save_image(self):
+        pass
 
     def start(self):
         # self.open_browser()
         while True:
-            self.generate_image()
+            # self.generate_image()
             # self.save_images()
-            self.save_image_urls()
+            # self.save_image_urls()
 
             if input("Generate another image? (y/n): ") == "n":
                 break
