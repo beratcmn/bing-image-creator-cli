@@ -83,7 +83,33 @@ class Scrapper:
                 self.driver.get(self.PAGE_URL)
                 time.sleep(5)
 
-    def save_image_urls(self):
+    def generate_image(self):
+        self.driver.get(self.PAGE_URL)
+        time.sleep(5)
+        prompt_input_element = self.get_prompt_input_element()
+
+        os.system("cls")
+
+        self.imagePrompt = input("Enter prompt: ")
+
+        prompt_input_element.send_keys(self.imagePrompt)
+        prompt_input_element.submit()
+
+        print("Generating images...")
+
+        try:
+            first_image = WebDriverWait(self.driver, 45).until(
+                EC.presence_of_element_located(
+                    (
+                        By.XPATH,
+                        "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+                    )
+                )
+            )
+        finally:
+            print("Images generated.")
+
+    def save_image_urls(self) -> list[str]:
         print("Saving image URLs...")
 
         # ? Image xPaths
@@ -149,38 +175,44 @@ class Scrapper:
                     + image_4,
                 )
 
-    def generate_image(self):
-        self.driver.get(self.PAGE_URL)
-        time.sleep(5)
-        prompt_input_element = self.get_prompt_input_element()
+            return [images_total, image_1, image_2, image_3, image_4]
 
-        os.system("cls")
+    def save_images(self, urls: list[str]):
+        print("Saving images...")
 
-        self.imagePrompt = input("Enter prompt: ")
+        for url in urls:
+            self.save_image(url, urls.index(url))
 
-        prompt_input_element.send_keys(self.imagePrompt)
-        prompt_input_element.submit()
+    def save_image(self, url: str, index: int = 0):
+        time.sleep(2)
 
-        print("Generating images...")
-
+        self.driver.get(url)
         try:
-            first_image = WebDriverWait(self.driver, 45).until(
+            print("Waiting for image to load...")
+            image = WebDriverWait(self.driver, 15).until(
                 EC.presence_of_element_located(
                     (
                         By.XPATH,
-                        "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+                        "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div/div[2]/div/div/img",
                     )
                 )
             )
+            print("Image found.")
+            image_url = image.get_attribute("src")
+            image_data = requests.get(image_url).content
+            with open(
+                "outputs/" + h.to_kebab_case(self.imagePrompt) + str(index) + ".png",
+                "wb",
+            ) as handler:
+                handler.write(image_data)
         finally:
-            print("Images generated.")
+            pass
 
     def start(self):
-        # self.open_browser()
         while True:
             self.generate_image()
-            # self.save_images()
-            self.save_image_urls()
+            urls = self.save_image_urls()
+            self.save_images(urls=urls[1:])
 
             if input("Generate another image? (y/n): ") == "n":
                 break
