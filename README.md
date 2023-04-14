@@ -28,7 +28,7 @@ After installing Python, you need to install the required libraries. You can do 
 pip install -r requirements.txt
 ```
 
-After installing the required libraries, you can run the tool by usin the run.bat file. You can also run the tool by running the following command in your terminal:
+After installing the required libraries, you can run the tool by using the **run.bat** file. You can also run the tool by running the following command in your terminal:
 
 ```bash
 python src/main.py
@@ -36,9 +36,15 @@ python src/main.py
 
 ## Installation
 
-To install all of the template files, run the following script from the root of your project's directory:
+To install the program run the following script
 
+```bash
+install.bat
 ```
+
+Alternatively you can run following commands from the root of your project's directory:
+
+```bash
 git clone https://github.com/beratcmn/bing-image-creator-cli.git
 cd bing-image-creator-cli
 pip install requirements.txt
