@@ -201,7 +201,11 @@ class Scrapper:
             image_url = image.get_attribute("src")
             image_data = requests.get(image_url).content
             with open(
-                "outputs/" + h.to_kebab_case(self.imagePrompt) + str(index) + ".png",
+                "outputs/"
+                + h.to_kebab_case(self.imagePrompt)
+                + "-"
+                + str(index)
+                + ".png",
                 "wb",
             ) as handler:
                 handler.write(image_data)
