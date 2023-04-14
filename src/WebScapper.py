@@ -14,6 +14,8 @@ import requests
 
 from pyvda import AppView
 
+import helpers as h
+
 import time
 import os
 
@@ -34,7 +36,7 @@ class Scrapper:
     PAGE_URL = "https://www.bing.com/create"
     edgeAutoLogin: bool = True
 
-    imagePropmpt = ""
+    imagePrompt = ""
     browserWindowHWND = 0
 
     def __post_init__(self):
@@ -175,9 +177,11 @@ class Scrapper:
             print("An error occurred while getting image URLs.")
         finally:
             print("Saving URLs...")
-            with open("image_urls.txt", "w") as f:
+            filename = h.to_kebab_case(self.imagePrompt) + ".txt"
+            print(filename)
+            with open("outputs/" + filename, "w") as f:
                 f.write(
-                    self.imagePropmpt
+                    self.imagePrompt
                     + "\n"
                     + images_total
                     + "\n"
@@ -197,9 +201,9 @@ class Scrapper:
 
         os.system("cls")
 
-        self.imagePropmpt = input("Enter prompt: ")
+        self.imagePrompt = input("Enter prompt: ")
 
-        prompt_input_element.send_keys(self.imagePropmpt)
+        prompt_input_element.send_keys(self.imagePrompt)
         prompt_input_element.submit()
 
         print("Generating images...")
