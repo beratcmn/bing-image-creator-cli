@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 test/
-image_urls.txt
+outputs/
