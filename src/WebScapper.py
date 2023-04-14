@@ -177,18 +177,42 @@ class Scrapper:
 
             return [images_total, image_1, image_2, image_3, image_4]
 
-    def save_images(self):
+    def save_images(self, urls: list[str]):
         print("Saving images...")
 
-    def save_image(self):
-        pass
+        for url in urls:
+            self.save_image(url, urls.index(url))
+
+    def save_image(self, url: str, index: int = 0):
+        time.sleep(2)
+
+        self.driver.get(url)
+        try:
+            print("Waiting for image to load...")
+            image = WebDriverWait(self.driver, 15).until(
+                EC.presence_of_element_located(
+                    (
+                        By.XPATH,
+                        "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div/div[2]/div/div/img",
+                    )
+                )
+            )
+            print("Image found.")
+            image_url = image.get_attribute("src")
+            image_data = requests.get(image_url).content
+            with open(
+                "outputs/" + h.to_kebab_case(self.imagePrompt) + str(index) + ".png",
+                "wb",
+            ) as handler:
+                handler.write(image_data)
+        finally:
+            pass
 
     def start(self):
-        # self.open_browser()
         while True:
-            # self.generate_image()
-            # self.save_images()
-            # self.save_image_urls()
+            self.generate_image()
+            urls = self.save_image_urls()
+            self.save_images(urls=urls[1:])
 
             if input("Generate another image? (y/n): ") == "n":
                 break
