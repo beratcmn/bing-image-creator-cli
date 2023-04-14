@@ -3,8 +3,12 @@ from pyvda import AppView
 from DesktopManager import DesktopManager
 from WebScapper import Scrapper
 
+import helpers as h
+
 
 def main():
+    h.check_for_output_dir()
+
     desktopManager = DesktopManager()
     scrapper = Scrapper()
 
