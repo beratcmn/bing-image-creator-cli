@@ -15,8 +15,8 @@ Other things to include:
 
 ## Example
 
-<video src="https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/video-0.mp4" controls="controls" style="max-width: 730px;">
-</video>
+
+https://user-images.githubusercontent.com/47108366/232227030-aa0e13ce-84b3-4a76-b011-1f15ac41c314.mp4
 
 ## Screenshot
 
