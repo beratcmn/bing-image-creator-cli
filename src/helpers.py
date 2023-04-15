@@ -45,3 +45,4 @@ def create_image_grid(prompt: str, images: list[str]) -> None:
         collage.paste(img, (1024 * (i % 2), 1024 * (i // 2)))
 
     collage.save("outputs/" + prompt + ".png")
+    collage.show()
