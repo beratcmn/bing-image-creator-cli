@@ -1,3 +1,4 @@
+![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/banner-0.png)
 # Bing Image Creator Tool
 
 **Description**: Bing Image Creator Tool is a tool that allows you to run Bing Image Creator (I'll call it BIC) from your terminal.
@@ -19,7 +20,7 @@ Other things to include:
 
 ## Screenshot
 
-![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/banner-0.png)
+![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/screenshot-0.png)
 
 ## Image grid example
 
