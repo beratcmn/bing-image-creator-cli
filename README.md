@@ -14,7 +14,7 @@ Other things to include:
 
 ## Example
 
-<video src="./media/video-0.mp4" controls="controls" style="max-width: 730px;">
+<video src="https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/video-0.mp4" controls="controls" style="max-width: 730px;">
 </video>
 
 ## Screenshot
