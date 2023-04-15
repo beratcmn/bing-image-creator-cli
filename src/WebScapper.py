@@ -180,8 +180,13 @@ class Scrapper:
     def save_images(self, urls: list[str]):
         print("Saving images...")
 
+        image_names = []
+
         for url in urls:
-            self.save_image(url, urls.index(url))
+            name = self.save_image(url, urls.index(url))
+            image_names.append(name)
+
+        h.create_image_grid(h.to_kebab_case(self.imagePrompt), image_names)
 
     def save_image(self, url: str, index: int = 0):
         time.sleep(2)
@@ -200,17 +205,20 @@ class Scrapper:
             print("Image found.")
             image_url = image.get_attribute("src")
             image_data = requests.get(image_url).content
-            with open(
+            image_name = (
                 "outputs/"
                 + h.to_kebab_case(self.imagePrompt)
                 + "-"
                 + str(index)
-                + ".png",
+                + ".png"
+            )
+            with open(
+                image_name,
                 "wb",
             ) as handler:
                 handler.write(image_data)
         finally:
-            pass
+            return image_name
 
     def start(self):
         while True:
