@@ -12,27 +12,30 @@ Other things to include:
 
 ---
 
+## Example
+
+<video src="https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/video-0.mp4" controls="controls" style="max-width: 730px;">
+</video>
+
 ## Screenshot
 
 ![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/banner-0.png)
 
+## Image grid example
+
+![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/darth-vader-dancing-with-stormtroopers-comic-style.png)
+
 ---
 
 ## Usage
-
-To use this tool, you need to have Python 3.6 or higher installed on your computer. You can download it from [here](https://www.python.org/downloads/).
-
-After installing Python, you need to install the required libraries. You can do this by running the following command in your terminal:
-
-```bash
-pip install -r requirements.txt
-```
 
 After installing the required libraries, you can run the tool by using the **run.bat** file. You can also run the tool by running the following command in your terminal:
 
 ```bash
 python src/main.py
 ```
+
+I highly recommend you to use **Microsoft Edge** because it will automatically login to your Microsoft account thus removing the need to login besides it's the only browser that I've tested and it works perfectly.
 
 ## Installation
 
