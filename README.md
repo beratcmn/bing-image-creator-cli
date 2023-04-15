@@ -1,4 +1,5 @@
 ![banner](https://raw.githubusercontent.com/beratcmn/bing-image-creator-cli/main/media/banner-0.png)
+
 # Bing Image Creator Tool
 
 **Description**: Bing Image Creator Tool is a tool that allows you to run Bing Image Creator (I'll call it BIC) from your terminal.
@@ -14,7 +15,6 @@ Other things to include:
 ---
 
 ## Example
-
 
 https://user-images.githubusercontent.com/47108366/232227030-aa0e13ce-84b3-4a76-b011-1f15ac41c314.mp4
 
