@@ -14,6 +14,21 @@ Other things to include:
 
 ---
 
+## Changelog [19.03.2024]
+
+- `pyvda` updated to `0.4.1` to work up to `Windows 11 OS Build 22631.3296`
+- `MS Edge Driver` updated to `122.0.2365.92`
+- Added a selector for initial input box.
+- Bing Image Creator XPaths updated to work with 'Microsoft Designer' so it should work fine now.
+- Fixed the timeout issue for 'Non-Boosted' images.
+- Fixed the Cookie Popup issue.
+- Fix issue causuing downloading the second image instead of first too.
+
+## Known Issues
+
+- Less than 4 images are causing the tool to crash.
+- Content Policy Error, I'll fix this issue in the next update.
+
 ## Example
 
 https://user-images.githubusercontent.com/47108366/232227030-aa0e13ce-84b3-4a76-b011-1f15ac41c314.mp4
@@ -55,3 +70,9 @@ pip install requirements.txt
 ```
 
 ---
+
+## Todo
+
+- [ ] Add Magic Prompt feature to the tool like in Ideogram.
+- [ ] Add a CLI for the tool.
+- [ ] Add a simple REST API for the tool.

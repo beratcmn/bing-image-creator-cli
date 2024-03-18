@@ -2,7 +2,6 @@
 ### Selenium Wrapper and Helper Functions
 """
 
-
 from dataclasses import dataclass
 
 from selenium import webdriver
@@ -18,6 +17,8 @@ import helpers as h
 
 import time
 import os
+
+is_first_image = True
 
 
 @dataclass
@@ -59,12 +60,15 @@ class Scrapper:
 
         time.sleep(5)
 
-        # ? Cookie prompt
-        self.driver.find_element(
-            By.XPATH, "/html/body/div[1]/div[1]/div/div[2]/div[2]/button[1]"
-        ).click()
+        try:
+            # ? Cookie prompt
+            self.driver.find_element(
+                By.XPATH, "/html/body/div[1]/div[1]/div/div[2]/div[2]/button[1]"
+            ).click()
 
-        time.sleep(5)
+            time.sleep(5)
+        except Exception:
+            pass
 
         if self.defaultBrowser == "edge" and self.edgeAutoLogin:
             self.get_prompt_input_element()
@@ -73,12 +77,18 @@ class Scrapper:
     def get_prompt_input_element(self):
         while True:
             try:
-                element = self.driver.find_element(
-                    By.XPATH, "/html/body/div[2]/div[2]/div[2]/form/div/input[1]"
-                )
+                if is_first_image:
+                    element = self.driver.find_element(
+                        By.XPATH,
+                        "/html/body/div[2]/div[4]/div[1]/div/div/div[1]/form/textarea",
+                    )
+                else:
+                    element = self.driver.find_element(
+                        By.XPATH, "/html/body/div[2]/div[2]/div[2]/form/div/input[1]"
+                    )
                 print("Prompt element found!")
                 return element
-            except:
+            except Exception:
                 print("Prompt element not found, refreshing...")
                 self.driver.get(self.PAGE_URL)
                 time.sleep(5)
@@ -97,26 +107,40 @@ class Scrapper:
 
         print("Generating images...")
 
-        try:
-            first_image = WebDriverWait(self.driver, 45).until(
-                EC.presence_of_element_located(
-                    (
-                        By.XPATH,
-                        "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+        while True:
+            try:
+                WebDriverWait(self.driver, 30).until(
+                    EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            # "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+                            "/html/body/div[3]/div[1]/div[5]/div[1]/div[2]/div/div[1]/ul[1]/li[1]/div/div/a",
+                        )
                     )
                 )
-            )
-        finally:
-            print("Images generated.")
+                print("Images generated.")
+                break
+            except Exception as e:
+                print("An error occurred while generating images:", str(e).strip()[:50])
+                print("Refreshing page...")
+                self.driver.get(self.driver.current_url)
 
     def save_image_urls(self) -> list[str]:
         print("Saving image URLs...")
 
         # ? Image xPaths
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[1]/div/div/a
-        # /html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[2]/div/div/a
+        image_path_1 = (
+            "/html/body/div[3]/div/div[5]/div[1]/div/div/div[1]/ul[1]/li[1]/div/div/a"
+        )
+        image_path_2 = (
+            "/html/body/div[3]/div/div[5]/div[1]/div/div/div[1]/ul[1]/li[2]/div/div/a"
+        )
+        image_path_3 = (
+            "/html/body/div[3]/div/div[5]/div[1]/div/div/div[1]/ul[2]/li[1]/div/div/a"
+        )
+        image_path_4 = (
+            "/html/body/div[3]/div/div[5]/div[1]/div/div/div[1]/ul[2]/li[2]/div/div/a"
+        )
 
         # ? This has to be a try block because Bing doesn't always produce 4 images.
         images_total, image_1, image_2, image_3, image_4 = (
@@ -130,32 +154,31 @@ class Scrapper:
             print("Getting image 1...")
             image_1 = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[1]/div/div/a",
+                image_path_1,
             ).get_attribute("href")
             time.sleep(0.5)
 
             print("Getting image 2...")
             image_2 = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[1]/li[2]/div/div/a",
+                image_path_2,
             ).get_attribute("href")
             time.sleep(0.5)
 
             print("Getting image 3...")
             image_3 = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[1]/div/div/a",
+                image_path_3,
             ).get_attribute("href")
             time.sleep(0.5)
 
             print("Getting image 4...")
-            image_4 = self.driver.find_element(
-                By.XPATH,
-                "/html/body/div[2]/div/div[5]/div[1]/div/div/div/ul[2]/li[2]/div/div/a",
-            ).get_attribute("href")
+            image_4 = self.driver.find_element(By.XPATH, image_path_4).get_attribute(
+                "href"
+            )
             time.sleep(0.5)
-        except:
-            print("An error occurred while getting image URLs.")
+        except Exception as e:
+            print("An error occurred while getting image URLs:", str(e))
         finally:
             print("Saving URLs...")
             filename = h.to_kebab_case(self.imagePrompt) + ".txt"
@@ -183,25 +206,39 @@ class Scrapper:
         image_names = []
 
         for url in urls:
+            print("Saving image from URL: ", url)
             name = self.save_image(url, urls.index(url))
             image_names.append(name)
 
         h.create_image_grid(h.to_kebab_case(self.imagePrompt), image_names)
 
     def save_image(self, url: str, index: int = 0):
-        time.sleep(2)
+        time.sleep(3)
 
         self.driver.get(url)
+        image_name = ""
         try:
             print("Waiting for image to load...")
-            image = WebDriverWait(self.driver, 15).until(
-                EC.presence_of_element_located(
-                    (
-                        By.XPATH,
-                        "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div/div[2]/div/div/img",
+            if index == 0:
+                image = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            # "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[2]/div/div/div/img",
+                            "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div/div/div/img",
+                        )
                     )
                 )
-            )
+            else:
+                image = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[2]/div/div/div/img",
+                            # "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div/div/div/img",
+                        )
+                    )
+                )
             print("Image found.")
             image_url = image.get_attribute("src")
             image_data = requests.get(image_url).content
@@ -217,10 +254,14 @@ class Scrapper:
                 "wb",
             ) as handler:
                 handler.write(image_data)
+        except Exception as e:
+            print("An error occurred while saving image:", str(e))
         finally:
             return image_name
 
     def start(self):
+        global is_first_image
+
         while True:
             self.generate_image()
             urls = self.save_image_urls()
@@ -228,3 +269,5 @@ class Scrapper:
 
             if input("Generate another image? (y/n): ") == "n":
                 break
+
+            is_first_image = False

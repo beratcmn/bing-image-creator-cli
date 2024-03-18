@@ -3,7 +3,7 @@
 """
 
 from dataclasses import dataclass
-from pyvda import AppView, VirtualDesktop, get_apps_by_z_order, get_virtual_desktops
+from pyvda import AppView, VirtualDesktop, get_virtual_desktops
 
 
 @dataclass
