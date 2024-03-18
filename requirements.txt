@@ -11,7 +11,7 @@ outcome==1.2.0
 Pillow==9.5.0
 pycparser==2.21
 PySocks==1.7.1
-pyvda==0.2.8
+pyvda==0.4.1
 pywin32==306
 requests==2.28.2
 selenium==4.8.3
