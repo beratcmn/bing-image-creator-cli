@@ -26,6 +26,7 @@ Other things to include:
 
 ## Known Issues
 
+- So far only works with `Microsoft Edge` because of Auto Login feature.
 - Less than 4 images are causing the tool to crash.
 - Content Policy Error, I'll fix this issue in the next update.
 
@@ -43,16 +44,6 @@ https://user-images.githubusercontent.com/47108366/232227030-aa0e13ce-84b3-4a76-
 
 ---
 
-## Usage
-
-After installing the required libraries, you can run the tool by using the **run.bat** file. You can also run the tool by running the following command in your terminal:
-
-```bash
-python src/main.py
-```
-
-I highly recommend you to use **Microsoft Edge** because it will automatically login to your Microsoft account thus removing the need to login besides it's the only browser that I've tested and it works perfectly.
-
 ## Installation
 
 To install the program run the following script
@@ -66,10 +57,26 @@ Alternatively you can run following commands from the root of your project's dir
 ```bash
 git clone https://github.com/beratcmn/bing-image-creator-cli.git
 cd bing-image-creator-cli
-pip install requirements.txt
+python -m venv .venv
+.venv\Scripts\activate.ps1
+pip install -r requirements.txt
 ```
 
----
+## Usage
+
+After installing the required libraries, you can run the tool by using the **run.bat** file.
+
+```bash
+run.bat
+```
+
+You can also run the tool by running the following command in your terminal:
+
+```bash
+python src/main.py
+```
+
+## I highly recommend you to use **Microsoft Edge** because it will automatically login to your Microsoft account thus removing the need to login besides it's the only browser that I've tested and it works perfectly.
 
 ## Todo
 
