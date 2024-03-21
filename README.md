@@ -80,10 +80,15 @@ python src/main.py
 
 ## Todo
 
+- [x] Create dataset for Magic Prompt Feature.
+
+  [beratcmn/magic-prompt](https://huggingface.co/datasets/beratcmn/magic-prompt)
+
 - [ ] Add Magic Prompt feature to the tool like in Ideogram.
 
   What is Magic Prompt? Magic Prompt interprets your original prompt according to your instructions and optimizes it to maximize the variety and beauty of the images generated.
   This feature also allows you to write your prompts in your native language for greater accuracy and ease of use by users worldwide.
 
 - [ ] Add a CLI for the tool.
+
 - [ ] Add a simple REST API for the tool.
